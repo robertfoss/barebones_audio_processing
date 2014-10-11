@@ -1,23 +1,38 @@
-CC=gcc
-CFLAGS=-I. -g
-OUT=../out
+CC       = gcc
+CFLAGS   = -std=c99 -Wall -I. -I../common
+LINKER   = $(CC) -o
+LFLAGS   = -Wall -Wextra -I. -lm
 
-all: $(OUT)/wav_dec_test $(OUT)/wav_dec_test_ndebug
+BINDIR   = ../out/
+SOURCES  := $(wildcard *.c)
+INCLUDES := $(wildcard *.h)
 
-$(OUT)/wav_dec_test_obj/%.o: wav_dec.c
-	mkdir -p $(@D)
-	$(CC) -c -o $@ $< $(CFLAGS) -DTEST
+all: $(BINDIR)/wav_dec_test $(BINDIR)/wav_enc_test
 
-$(OUT)/wav_dec_test: $(OUT)/wav_dec_test_obj/wav_dec.o
-	$(CC) -o $@ $^ $(CFLAGS) -DTEST
+WAV_DEC_OBJDIR   = ../out/obj_wav_dec
+WAV_DEC_OBJECTS  := $(SOURCES:%.c=$(WAV_DEC_OBJDIR)/%.o)
 
+$(BINDIR)/wav_dec_test: $(WAV_DEC_OBJECTS)
+	@$(LINKER) $@ $(LFLAGS) $(WAV_DEC_OBJECTS) -DWAV_DEC_TEST
+	@echo "wav_dec_test built"
 
-$(OUT)/wav_dec_test_ndebug_obj/%.o: wav_dec.c
-	mkdir -p $(@D)
-	$(CC) -c -o $@ $< $(CFLAGS) -DTEST -DNDEBUG
+$(WAV_DEC_OBJECTS): $(WAV_DEC_OBJDIR)/%.o : %.c
+	@mkdir -p $(WAV_DEC_OBJDIR)
+	@$(CC) $(CFLAGS) -c $< -o $@ -DWAV_DEC_TEST
+	
+	
+WAV_ENC_OBJDIR   = ../out/obj_wav_enc
+WAV_ENC_OBJECTS  := $(SOURCES:%.c=$(WAV_ENC_OBJDIR)/%.o)
 
-$(OUT)/wav_dec_test_ndebug: $(OUT)/wav_dec_test_ndebug_obj/wav_dec.o
-	$(CC) -o $@ $^ $(CFLAGS) -DTEST -DNDEBUG
+$(BINDIR)/wav_enc_test: $(WAV_ENC_OBJECTS)
+	@$(LINKER) $@ $(LFLAGS) $(WAV_ENC_OBJECTS) -DWAV_ENC_TEST
+	@echo "wav_enc_test built"
+	
+$(WAV_ENC_OBJECTS): $(WAV_ENC_OBJDIR)/%.o : %.c
+	@mkdir -p $(WAV_ENC_OBJDIR)
+	@$(CC) $(CFLAGS) -c $< -o $@ -DWAV_ENC_TEST
+	
 
+.PHONEY: clean
 clean:
-	rm -rf $(OUT)
+	@ rm -rf ../out

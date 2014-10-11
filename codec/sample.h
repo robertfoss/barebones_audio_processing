@@ -12,7 +12,7 @@ typedef struct {
         t_codec_wav wav;
         // Add new codec types here..
     } codec;
-    unsigned long num_samples;
+    unsigned long nbr_samples;
     void          *samples[MAX_CHANNELS];
 } t_sample;
 
