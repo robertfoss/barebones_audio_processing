@@ -1,5 +1,5 @@
 CC       = gcc
-CFLAGS   = -std=c99 -Wall -I. -I../common
+CFLAGS   = -std=c99 -Wall -I. -I../common -DNDEBUG
 LINKER   = $(CC) -o
 LFLAGS   = -Wall -Wextra -I. -lm
 

@@ -202,6 +202,8 @@ static int test (const char *filename)
 {
     t_sample sample;
 
+    printf("wav_dec testing: %s\n", filename);
+
     FILE *fp = fopen(filename, "r");
     if (fp == NULL) {
         fprintf(stderr, "Unable to open file\n");
@@ -222,13 +224,13 @@ int main()
     r |= test("../resources/hey_32float_44khz.wav");
     r |= test("../resources/hey_8pcm_44khz.wav");
 
-    if (r == RET_OK)
+    if (r != RET_OK)
     {
-        return r;
-    }
-    else
-    {
+        printf("Failure\n");
         return -1;
     }
+    printf("Success\n");
+
+    return RET_OK;
 }
 #endif

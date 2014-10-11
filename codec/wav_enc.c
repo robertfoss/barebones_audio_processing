@@ -133,6 +133,8 @@ static int test(const char *filename)
 {
     t_sample sample;
 
+    printf("wav_enc testing: %s\n", filename);
+
     // Decode a file
     FILE *fp = fopen(filename, "r");
     if (fp == NULL) {
@@ -157,7 +159,7 @@ static int test(const char *filename)
 
     memset(&sample, 0, sizeof(t_sample));
 
-    // Verify the encoded file parses
+    // Verify that the encoded file parses
     fp = fopen(filename, "r");
     if (fp == NULL) {
         fprintf(stderr, "Unable to open file\n");
@@ -179,8 +181,10 @@ int main()
 
     if (r != RET_OK)
     {
+        printf("Failure\n");
         return -1;
     }
+    printf("Success\n");
 
     return RET_OK;
 }
