@@ -59,19 +59,19 @@ static inline int write_fmt_chunk(t_wav_encoder *e)
         WRITE_CHECKED(e->fp, &buf, 2);
     }
 
-    DEBUG("Number of channels: %u", e->codec->num_channels);
-    buf = e->codec->num_channels;
+    DEBUG("Number of channels: %u", e->codec->nbr_channels);
+    buf = e->codec->nbr_channels;
     WRITE_CHECKED(e->fp, &buf, 2);
 
     buf = e->codec->sample_rate;
     DEBUG("Sample rate: %u", buf);
     WRITE_CHECKED(e->fp, &buf, 4);
 
-    buf = e->codec->sample_rate * e->codec->num_channels * (e->codec->bits_per_sample / 8);
+    buf = e->codec->sample_rate * e->codec->nbr_channels * (e->codec->bits_per_sample / 8);
     DEBUG("Byte rate: %u", buf);
     WRITE_CHECKED(e->fp, &buf, 4);
 
-    buf = e->codec->num_channels * (e->codec->bits_per_sample / 8);
+    buf = e->codec->nbr_channels * (e->codec->bits_per_sample / 8);
     DEBUG("Block align: %u", buf);
     WRITE_CHECKED(e->fp, &buf, 2);
 

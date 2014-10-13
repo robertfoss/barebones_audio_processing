@@ -12,7 +12,7 @@ typedef struct {
     uint32_t sample_rate;
     uint16_t bits_per_sample;
     uint8_t  codec_type;
-    uint8_t  num_channels;
+    uint8_t  nbr_channels;
     bool     is_float;
 } t_codec;
 

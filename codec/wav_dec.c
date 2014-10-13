@@ -87,11 +87,11 @@ static inline int parse_fmt_chunk(t_wav_parser *p)
     }
 
     READ_CHECKED(p->fp, &buf, 2);
-    p->codec->num_channels = buf & 0xFFFF;
-    DEBUG("Number of channels: %u", p->codec->num_channels);
-    if (p->codec->num_channels != 1)
+    p->codec->nbr_channels = buf & 0xFFFF;
+    DEBUG("Number of channels: %u", p->codec->nbr_channels);
+    if (p->codec->nbr_channels != 1)
     {
-        fprintf(stderr, "Unsupported number of channels (%u)\n", p->codec->num_channels);
+        fprintf(stderr, "Unsupported number of channels (%u)\n", p->codec->nbr_channels);
         return RET_UNSUPPORTED;
     }
 

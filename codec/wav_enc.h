@@ -8,9 +8,9 @@
 #include <string.h>
 
 #include "../common/error.h"
+#include "../common/sample.h"
 
 #include "wav.h"
-#include "sample.h"
 
 
 int wav_enc(FILE *fp, t_sample *sample);
